@@ -25,7 +25,11 @@ jobs:
 
       - name: "Compile CentOS 7 (amd64)"
         run: |
-          docker run --rm -v ${{ github.workspace }}/output:/data/el7/RPMS/x86_64 -v ${{ github.workspace }}/downloads:/data/downloads ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:centos7
+          docker run --rm \
+          -v ${{ github.workspace }}/output:/data/el7/RPMS/x86_64 \
+          -v ${{ github.workspace }}/downloads:/data/downloads \
+          -v ${{ github.workspace }}/version.env:/data/version.env \
+          ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:centos7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -48,7 +52,11 @@ jobs:
 
       - name: "Compile CentOS 6 (amd64)"
         run: |
-          docker run --rm -v ${{ github.workspace }}/output:/data/el6/RPMS/x86_64 -v ${{ github.workspace }}/downloads:/data/downloads  ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:centos6
+          docker run --rm \
+          -v ${{ github.workspace }}/output:/data/el6/RPMS/x86_64 \
+          -v ${{ github.workspace }}/downloads:/data/downloads \
+          -v ${{ github.workspace }}/version.env:/data/version.env \
+          ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:centos6
 
       - uses: actions/upload-artifact@v4
         with:
