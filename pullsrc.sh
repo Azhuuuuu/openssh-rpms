@@ -24,7 +24,13 @@ source version.env
 
 OPENSSHMIR=https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable
 OPENSSLMIR=https://www.openssl.org/source/
-OPENSSLMIR=${GH_PROXY}https://github.com/openssl/openssl/releases/download/openssl-${OPENSSLVER}/
+OPENSSLMIR=${GH_PROXY}https://github.com/openssl/openssl/releases/download/openssl-${OPENSSLVER}
+# 判断是否以 "1" 开头
+if [[ $OPENSSLVER == 1* ]]; then
+    # 替换 "." 为 "_"
+    OPENSSLVER=${OPENSSLVER//./_}
+	OPENSSLMIR=${GH_PROXY}https://github.com/openssl/openssl/releases/download/OpenSSL_${OPENSSLVER}
+fi
 ASKPASSMIR=https://src.fedoraproject.org/repo/pkgs/openssh/x11-ssh-askpass-1.2.4.1.tar.gz/8f2e41f3f7eaa8543a2440454637f3c3
 PERLMIR=https://www.cpan.org/src/5.0
 
