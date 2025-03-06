@@ -18,6 +18,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: 读取 source.sh 并导出变量
+        run: |
+          source version.env
+          echo "OPENSSHVER=$OPENSSHVER" >> $GITHUB_ENV  # 导出变量
 
       - name: "Download packages"
         run: |
@@ -33,7 +38,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: el7-amd64
+          name: el7-amd64-${{env.OPENSSHVER}}
           path: ${{ github.workspace }}/output
 
   build_el6:
@@ -45,6 +50,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: 读取 source.sh 并导出变量
+        run: |
+          source version.env
+          echo "OPENSSHVER=$OPENSSHVER" >> $GITHUB_ENV  # 导出变量
 
       - name: "Download packages"
         run: |
@@ -60,23 +70,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: el6-amd64
+          name: el6-amd64-${{env.OPENSSHVER}}
           path: ${{ github.workspace }}/output
-
-  create_release:
-    needs:
-      - build_el7
-      - build_el6
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: el7-amd64
-          path: ./output
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: el6-amd64
-          path: ./output
