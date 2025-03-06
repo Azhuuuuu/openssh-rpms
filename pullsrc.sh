@@ -34,7 +34,7 @@ fi
 ASKPASSMIR=https://src.fedoraproject.org/repo/pkgs/openssh/x11-ssh-askpass-1.2.4.1.tar.gz/8f2e41f3f7eaa8543a2440454637f3c3
 PERLMIR=https://www.cpan.org/src/5.0
 
-rpm -q wget >/dev/null || yum install -y wget
+#rpm -q wget >/dev/null || yum install -y wget
 mkdir -p downloads
 pushd downloads
 if [[ ! -f $OPENSSLSRC ]]; then
